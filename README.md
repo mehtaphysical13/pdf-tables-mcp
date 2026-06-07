@@ -18,13 +18,15 @@ Use cases:
 
 ## Pricing
 
-| Tier | Price | Quota |
+| Tier | Price | Quota (pages/mo) |
 |---|---|---|
-| Free | $0 | 50 extractions/mo |
-| Hobby | $19/mo | 500/mo, $0.10 overage |
-| Pro | $99/mo | 5,000/mo, $0.08 overage |
-| Business | $499/mo | 50,000/mo, $0.05 overage, 99.9% SLA |
+| Free | $0 | 50 pages |
+| Hobby | $19/mo | 250 pages |
+| Pro | $99/mo | 2,000 pages |
+| Business | $499/mo | 15,000 pages, 99.9% SLA |
 | Enterprise | Custom | Unlimited, VPC, SOC 2 path |
+
+Quotas measure pages processed (not calls) — a 3-page PDF counts as 3 against your monthly quota. Keeps pricing fair for users running small and large PDFs alike.
 
 ## Install (coming soon)
 
