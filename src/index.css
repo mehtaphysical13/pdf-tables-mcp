@@ -21,3 +21,84 @@ code {
 ::selection {
   background: #fde68a;
 }
+
+/* Blog post typography */
+article h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 0 0 24px;
+  line-height: 1.1;
+}
+article h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 40px 0 14px;
+  letter-spacing: -0.3px;
+}
+article h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 28px 0 10px;
+}
+article p {
+  margin: 0 0 16px;
+}
+article ul,
+article ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+article li {
+  margin-bottom: 6px;
+}
+article code {
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+article pre {
+  background: #0b1220;
+  color: #e2e8f0;
+  padding: 16px 18px;
+  border-radius: 10px;
+  overflow: auto;
+  font-size: 13.5px;
+  line-height: 1.6;
+  border: 1px solid #1e293b;
+  margin: 0 0 20px;
+}
+article pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 20px;
+  font-size: 14.5px;
+}
+article th,
+article td {
+  border: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  text-align: left;
+}
+article th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+article hr {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin: 32px 0;
+}
+article blockquote {
+  border-left: 3px solid #cbd5e1;
+  padding-left: 16px;
+  margin: 0 0 16px;
+  color: #475569;
+  font-style: italic;
+}

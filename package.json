@@ -32,6 +32,8 @@
     "@modelcontextprotocol/sdk": "^1.0.4",
     "pdf-lib": "^1.17.1",
     "pg": "^8.13.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "resend": "^4.0.0",
     "stripe": "^17.4.0",
     "tiny-lru": "^11.2.11",
