@@ -1,26 +1,34 @@
+import { useEffect, useState } from "react";
+import Landing from "./pages/Landing";
+import Dashboard from "./pages/Dashboard";
+
+type Route = { name: "landing" } | { name: "dashboard"; apiKey: string | null };
+
+function parseRoute(): Route {
+  const p = window.location.pathname;
+  if (p.startsWith("/dashboard")) {
+    const hash = window.location.hash;
+    const apiKey = hash.startsWith("#") ? hash.slice(1) : null;
+    return { name: "dashboard", apiKey };
+  }
+  return { name: "landing" };
+}
+
 export default function App() {
-  return (
-    <main
-      style={{
-        maxWidth: 720,
-        margin: "0 auto",
-        padding: "48px 24px",
-        fontFamily:
-          "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
-        lineHeight: 1.55,
-        color: "#0f172a",
-      }}
-    >
-      <h1 style={{ fontSize: 36, marginBottom: 8 }}>pdf-tables-mcp</h1>
-      <p style={{ color: "#475569", fontSize: 18, marginTop: 0 }}>
-        Reliable PDF table extraction as an MCP tool. Coming online over the
-        next few days.
-      </p>
-      <p style={{ marginTop: 24 }}>
-        <a href="https://github.com/mehtaphysical13/pdf-tables-mcp">
-          Source on GitHub
-        </a>
-      </p>
-    </main>
-  );
+  const [route, setRoute] = useState<Route>(() => parseRoute());
+
+  useEffect(() => {
+    const onChange = () => setRoute(parseRoute());
+    window.addEventListener("hashchange", onChange);
+    window.addEventListener("popstate", onChange);
+    return () => {
+      window.removeEventListener("hashchange", onChange);
+      window.removeEventListener("popstate", onChange);
+    };
+  }, []);
+
+  if (route.name === "dashboard") {
+    return <Dashboard initialApiKey={route.apiKey} />;
+  }
+  return <Landing />;
 }
