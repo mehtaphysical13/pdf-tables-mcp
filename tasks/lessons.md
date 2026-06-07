@@ -2,6 +2,14 @@
 
 Captured per the user's global instructions — patterns to prevent repeating mistakes.
 
+## Setup-level lessons
+
+### NEVER suggest CLI commands to the user — even one-line "trivial" ones
+- Global rule: "Never send me to the command line." A `sudo chown` ask is still a violation.
+- When a tool's hardcoded path is blocked by perms (e.g. mcp-publisher writing to root-owned `~/.config`), try `HOME=/tmp/foo <bin>` first. Go binaries honor `$HOME` for `os.UserHomeDir()`.
+- If `$HOME` override fails, hit the underlying HTTP API directly with the auth token. mcp-publisher is a wrapper around `registry.modelcontextprotocol.io`'s REST API; the CLI is optional.
+- Lesson for the Factory template: any third-party CLI we integrate, document the `HOME`/`XDG_CONFIG_HOME` override path and the direct-API fallback so installs never block on local file perms.
+
 ## Day 1-2 findings
 
 ### Vercel marketplace auto-provisions Neon without user touch
