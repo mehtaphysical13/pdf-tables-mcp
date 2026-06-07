@@ -315,11 +315,32 @@ export default function Landing() {
             Add to <code style={inlineCode}>~/.cursor/mcp.json</code>:
           </p>
           <Code>{CURSOR_CONFIG("pdt_live_YOURKEY")}</Code>
-          <h3 style={subHeading}>Raw endpoint</h3>
+          <h3 style={subHeading}>Raw MCP endpoint</h3>
           <p style={para}>
             Streamable HTTP, API-key authenticated. Point any MCP client at:
           </p>
           <Code>{MCP_URL}</Code>
+          <h3 style={subHeading}>Not using MCP?</h3>
+          <p style={para}>
+            REST + OpenAPI 3.1 spec available for any HTTP-tool-calling agent
+            (Continue, custom workflows, etc.):
+          </p>
+          <ul
+            style={{
+              listStyle: "none",
+              padding: 0,
+              margin: 0,
+              fontSize: 14,
+              color: "#475569",
+            }}
+          >
+            <li style={{ marginBottom: 6 }}>
+              <code style={inlineCode}>POST /api/extract</code> — same backend as the MCP tool
+            </li>
+            <li style={{ marginBottom: 6 }}>
+              <code style={inlineCode}>GET /api/openapi.json</code> — OpenAPI 3.1 spec
+            </li>
+          </ul>
         </section>
 
         {/* Pricing */}
