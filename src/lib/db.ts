@@ -92,8 +92,9 @@ export function ensureSchema(): Promise<void> {
       );
       CREATE INDEX IF NOT EXISTS usage_events_user_ts_idx
         ON usage_events(user_id, ts DESC);
-      CREATE INDEX IF NOT EXISTS usage_events_month_idx
-        ON usage_events(user_id, date_trunc('month', ts));
+      -- date_trunc isn't IMMUTABLE so we can't index its result. The
+      -- (user_id, ts DESC) index above is sufficient — the monthly-sum
+      -- query in usage.ts uses ts >= date_trunc(...) which is sargable.
 
       CREATE TABLE IF NOT EXISTS subscriptions (
         id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),

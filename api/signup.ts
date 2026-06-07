@@ -84,9 +84,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       dashboard_url: `https://pdf-tables-mcp.vercel.app/dashboard#${raw}`,
     });
   } catch (e) {
-    log.error("signup failed", {
-      msg: e instanceof Error ? e.message : String(e),
-    });
-    res.status(500).json({ error: "signup_failed" });
+    const msg = e instanceof Error ? e.message : String(e);
+    const stack = e instanceof Error ? e.stack?.slice(0, 800) : undefined;
+    log.error("signup failed", { msg, stack });
+    // Surface the message during the launch debugging window — we'll lock
+    // this back down once telemetry is stable.
+    res.status(500).json({ error: "signup_failed", detail: msg });
   }
 }

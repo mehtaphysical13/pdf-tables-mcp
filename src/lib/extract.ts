@@ -71,12 +71,24 @@ export async function extractPdf(
     );
   }
 
+  // Bill the FULL page count, even when `pages` filter is set — Claude
+  // still sees the whole PDF and charges us per page of vision. Until we
+  // build a real page-slicing pre-step (v2), the user pays for what we
+  // actually pay. Note this in the README and add a warning when the
+  // filter is narrower than the document so users aren't surprised.
+  const pagesBilled = pdf.pageCount;
+  if (opts.pages && opts.pages.length < pdf.pageCount) {
+    warnings.push(
+      `pages filter requested ${opts.pages.length} page(s) but the PDF has ${pdf.pageCount} pages — your quota was charged ${pdf.pageCount} pages because the LLM sees the whole document. v2 will slice the PDF first to save cost on page-filtered calls.`
+    );
+  }
+
   const result: ExtractionResult = {
     source: opts.url,
     page_count: pdf.pageCount,
     tables,
     stats: {
-      pages_processed: opts.pages?.length ?? pdf.pageCount,
+      pages_processed: pagesBilled,
       latency_ms: Date.now() - start,
       cost_micro_usd: stats.costMicroUsd,
       model: stats.model,

@@ -30,6 +30,17 @@ Captured per the user's global instructions — patterns to prevent repeating mi
 - **Lesson: when LLM cost dominates, price per-page not per-call.**
 - Updated PLAN_QUOTA from {hobby: 500 calls} to {hobby: 250 pages} → keeps margin positive at ~70-80%.
 
+### Page-filter doesn't save LLM cost without explicit page slicing
+- `pages=[5]` on a 15-page PDF: Claude still receives the full PDF, sees all 15 pages of vision tokens. Cost is for the whole doc.
+- v1 quota counter must bill `pdf.pageCount`, not `opts.pages.length`, or we lose money on filtered calls.
+- v2 fix: slice the PDF with pdf-lib BEFORE base64-encoding, so Claude only sees requested pages.
+- Lesson for the Factory template: any LLM-backed tool with a "filter" arg needs to verify whether the filter is *server-side* (we slice before LLM) or *post-process* (we receive full output then trim). The billing must follow what we actually pay.
+
+### Postgres index expressions need IMMUTABLE functions
+- `CREATE INDEX ... ON tbl(date_trunc('month', ts))` errors with "functions in index expression must be marked IMMUTABLE".
+- Either use plain column indexes and rely on query planner with `ts >= date_trunc(...)` predicates (sargable), or use a generated column.
+- Lesson: test schema with `\dt+` / live deploy, not just unit tests.
+
 ### Vercel timeout will matter
 - 88s extraction latency on Sonnet for a 15-page PDF exceeds Vercel Hobby free limit (10-60s).
 - Need Vercel Pro ($20/mo) for 300s timeouts, OR implement async extraction (job queue, polling).
